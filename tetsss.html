@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <style>
+        /* Some  styling for this quiz */
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-image: linear-gradient(315deg, #63dff0 0%, #f4a0ff 100%);
+        }
+
+        .quiz-container {
+            text-align: center;
+        }
+
+        .question {
+            font-size: 30px;
+            margin-bottom: 20px;
+        }
+
+        .options {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        .option-button {
+            padding: 25px 30px;
+            font-size: 25px;
+            cursor: pointer;
+            background-color: #bbe9ff;
+            border: 1px solid rgb(252, 171, 241);
+        }
+    </style>
+
+
+
+
+
+
+
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple Quiz</title>
+</head>
+<body>
+  <!-- Container/box for my quiz content -->
+  <div class="quiz-container">
+    <!-- Div to display the tv show quiz question -->
+    <div class="question" id="question"></div>
+    <!-- Div to display the tv show quiz options -->
+    <div class="options" id="options"></div>
+  </div>
+
+  <script>
+    // incorparting complex data structure for my tv show quiz questions (these questions are radnom question but all to do with shows)
+    const quizQuestions = [
+      {
+        question: "What is the name of Sofia Vegara's character in Modern Family?",
+        options: ["Berlin", "Gloria", "Rosa", "Sonia"],
+        answer: "Gloria"
+      },
+      {
+        question: "Who played Hannah Montana?",
+        options: ["Ray Cyrus", "Miley Cyrus", "Emily Osment", "Selena Gomez"],
+        answer: "Miley Cyrus"
+      },
+      {
+        question: "Who is Spongebob's best friend?",
+        options: ["Squidward", "Mr Crabs", "Plankten", "Patrick"],
+        answer: "Patrick"
+      },
+      {
+        question: "What is the name of the dad in Black-ish",
+        options: ["Dre", "Junior", "Jack", "Anthony"],
+        answer: "Dre" 
+      },
+      {
+        question: "What is the name of the music teacher in Glee?",
+        options: ["Will Schuester", "Mark Robinson", "Poppy Williams", "Fin Hudson"],
+        answer: "Will Schuester"
+      }
+    ];
+
+    let currentQuestionIndex = 0;
+    let score = 0;
+
+    // Retrieve references to HTML elements
+    const questionElement = document.getElementById("question");
+    const optionsElement = document.getElementById("options");
+
+    // Below is the function created to display the current question
+    function displayQuestion() {
+      const currentQuestion = quizQuestions[currentQuestionIndex];
+      // Display the current question to users and computer
+      questionElement.textContent = currentQuestion.question;
+
+      // Clear the options from previous question so that users will recevie a new set of options 
+      optionsElement.innerHTML = "";
+
+      // Iterate through options and create buttons for each option so that my users were able to input within this game (needed this for the crieteria) 
+      currentQuestion.options.forEach(option => {
+        const button = document.createElement("button");
+        // Add a class to the button for styling
+        button.classList.add("option-button");
+        // Set the text of the button to the option
+        button.textContent = option;
+        // Set the onclick function to check the answer
+        button.onclick = () => checkAnswer(option);
+        // Append the button to the options container
+        optionsElement.appendChild(button);
+      });
+    }
+
+    // Function to check the selected answer
+    function checkAnswer(selectedAnswer) {
+      const currentQuestion = quizQuestions[currentQuestionIndex];
+
+      // Check if the selected answer is correct
+      if (selectedAnswer === currentQuestion.answer) {
+        // Increment the score if the answer is correct
+        score++;
+        // Display an alert/notication on top screen for correct answer
+        alert("Yayy Correct Answer!");
+      } else {
+        // Display an alert for wrong answer along with the correct answer
+        alert(`Ohh No Wrong Answer! The correct answer is ${currentQuestion.answer}`);
+      }
+
+      // Moving to the next question
+      currentQuestionIndex++;
+
+      // Check if there are more questions to display
+      if (currentQuestionIndex < quizQuestions.length) {
+        // Display the next question
+        displayQuestion();
+      } else {
+        // Display the final score obly if all questions have been answered
+        alert(`Yayy the Quiz ended. You scored ${score} out of ${quizQuestions.length}!!`);
+      }
+    }
+
+    // Display the first question when the script loads
+    displayQuestion();
+    
+
+  </script>
+</body>
+</html>
